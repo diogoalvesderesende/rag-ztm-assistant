@@ -4,13 +4,11 @@ RAG, AI Agents & Generative AI Course Assistant - Streamlit App
 Cyber Diogo's AI-powered companion for your Udemy course
 """
 
-import streamlit as st
-import json
 import os
+import re
 from pathlib import Path
-from typing import Optional
-import time
-from datetime import datetime
+
+import streamlit as st
 from dotenv import load_dotenv
 from openai import OpenAI
 from streamlit_extras.buy_me_a_coffee import button
@@ -144,45 +142,68 @@ st.markdown("""
         margin-top: 1.5rem;
     }
     
-    /* Enhanced message styling */
-    .user-message {
-        background: linear-gradient(135deg, rgba(230, 240, 255, 0.8), rgba(200, 220, 255, 0.6));
-        border-radius: 18px;
-        padding: 14px 18px;
-        margin: 8px 0;
-        border-left: 3px solid #0074FF;
-        text-align: right;
-        margin-left: 15%;
-        box-shadow: 0 2px 8px rgba(0, 116, 255, 0.15);
-        color: #1a1a1a;
-        font-size: 15px;
-        line-height: 1.5;
+    /* ChatGPT-like message styling */
+    [data-testid="stChatMessageContainer"] {
+        max-width: 760px;
+        margin: 0 auto;
     }
-    
-    .assistant-message {
-        background: linear-gradient(135deg, rgba(248, 248, 250, 0.95), rgba(240, 242, 250, 0.9));
-        border-radius: 18px;
-        padding: 14px 18px;
-        margin: 8px 0;
-        border-left: 3px solid #705FFE;
-        text-align: left;
-        margin-right: 15%;
-        box-shadow: 0 2px 8px rgba(112, 95, 254, 0.12);
-        color: #1a1a1a;
-        border: 1px solid rgba(112, 95, 254, 0.15);
-        font-size: 15px;
+    [data-testid="stChatMessage"] {
+        align-items: flex-start;
+        gap: 0.75rem;
+    }
+    [data-testid="stChatMessage"] [data-testid="stChatMessageMessage"] {
+        font-size: 0.95rem;
         line-height: 1.6;
     }
-    
-    /* Code block styling */
-    .code-block {
-        background-color: #f8f9fa;
-        border: 1px solid #e9ecef;
-        border-radius: 8px;
-        padding: 12px;
-        font-family: 'Courier New', monospace;
-        margin: 8px 0;
-        position: relative;
+    [data-testid="stChatMessageUser"] {
+        flex-direction: row-reverse;
+        justify-content: flex-end;
+    }
+    [data-testid="stChatMessageUser"] [data-testid="stChatMessageAvatar"] {
+        order: 2;
+        margin-left: 0.75rem;
+        margin-right: 0;
+    }
+    [data-testid="stChatMessageUser"] [data-testid="stChatMessageMessage"] {
+        order: 1;
+        background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+        color: #0f172a;
+        border-radius: 18px;
+        padding: 12px 16px;
+        box-shadow: 0 8px 20px rgba(59, 130, 246, 0.18);
+        border: 1px solid rgba(59, 130, 246, 0.35);
+        margin-left: auto;
+        margin-right: 0;
+    }
+    [data-testid="stChatMessageAssistant"] [data-testid="stChatMessageMessage"] {
+        background: #ffffff;
+        border-radius: 18px;
+        padding: 12px 16px;
+        border: 1px solid #e5e7eb;
+        box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+        margin-right: auto;
+        margin-left: 0.75rem;
+    }
+    [data-testid="stChatMessage"] ul,
+    [data-testid="stChatMessage"] ol {
+        margin: 0.25rem 0 0.75rem 1.25rem;
+        padding-left: 0.75rem;
+    }
+    [data-testid="stChatMessage"] li {
+        margin-bottom: 0.35rem;
+    }
+    [data-testid="stChatMessage"] pre {
+        background: #0f172a;
+        color: #f8fafc;
+        padding: 1rem 1.25rem;
+        border-radius: 14px;
+        margin: 0.75rem 0;
+        box-shadow: inset 0 0 0 1px rgba(148, 163, 184, 0.24);
+        overflow-x: auto;
+    }
+    [data-testid="stChatMessage"] code {
+        font-family: 'Fira Code', 'Source Code Pro', monospace;
+        font-size: 0.95rem;
     }
     
     /* Quick action buttons */
@@ -220,76 +241,40 @@ st.markdown("""
         background: linear-gradient(135deg, #0056CC, #003D99) !important;
     }
     
-    /* Text input styling */
-    .stTextArea textarea {
-        border-radius: 12px;
-        border: 2px solid #e0e0e0;
-        padding: 12px;
-        font-size: 15px;
-        transition: all 0.3s ease;
+    /* Chat input styling */
+    [data-testid="stChatInputTextArea"] textarea {
+        border-radius: 16px !important;
+        border: 1px solid #d1d5db !important;
+        padding: 0.75rem 1rem !important;
+        font-size: 0.95rem !important;
+        background: #ffffff !important;
+        color: #111827 !important;
+        box-shadow: 0 4px 12px rgba(15, 23, 42, 0.06) !important;
     }
-    
-    .stTextArea textarea:focus {
-        border-color: #0074FF;
-        box-shadow: 0 0 0 2px rgba(0, 116, 255, 0.1);
-        outline: none;
-    }
-    
-    /* Form styling */
-    [data-testid="stForm"] {
-        background: transparent;
-        border: none;
-        padding: 0;
-    }
-    
-    /* Override any Streamlit default button colors */
-    button[data-baseweb="button"] {
-        background-color: #0074FF !important;
-        color: white !important;
-    }
-    
-    /* Improved text input */
-    .stTextArea > div > div > textarea {
-        border-radius: 15px;
-        border: 3px solid #E0E0E0;
-        transition: border-color 0.0s ease;
-    }
-    
-    .stTextArea > div > div > textarea:focus {
-        border-color: #0074FF;
-        box-shadow: 0 0 0 2px rgba(0, 116, 255, 0.2);
-    }
-    
-    /* Kill ALL borders and shadows around the text area wrapper */
-    .stTextArea, 
-    .stTextArea > div, 
-    .stTextArea > div > div {
-        border: none !important;
+    [data-testid="stChatInputTextArea"] textarea:focus {
+        border-color: #2563eb !important;
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15) !important;
         outline: none !important;
-        box-shadow: none !important;
-        background: transparent !important; /* or white if you prefer */
     }
-            
-    .stTextArea > div > div > textarea {
-        font-family: 'Montserrat', sans-serif !important;
-        color: #373435 !important;  /* dark gray body text */
-        background-color: #FFFFFF !important; /* clean white input */
-        border-radius: 15px !important;
-        border: 2px solid #E0E0E0 !important; /* soft gray border */
+    [data-testid="stChatInputSubmitButton"] button {
+        background: linear-gradient(135deg, #0074FF, #0056CC) !important;
+        color: #ffffff !important;
+        font-weight: 600 !important;
+        border-radius: 999px !important;
+        padding: 0.6rem 1.4rem !important;
+        box-shadow: 0 12px 24px rgba(59, 130, 246, 0.35) !important;
+        border: none !important;
     }
-    .stTextArea > div > div > textarea:focus {
-        border-color: #0074FF !important;  /* brand blue focus */
-        box-shadow: 0 0 0 2px rgba(0, 116, 255, 0.2) !important;
+    [data-testid="stChatInputSubmitButton"] button:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 16px 32px rgba(59, 130, 246, 0.4) !important;
     }
 
-    
 
 </style>
 """, unsafe_allow_html=True)
 
 # Initialize session state
-if "messages" not in st.session_state:
-    st.session_state.messages = []
 if "last_response_id" not in st.session_state:
     st.session_state.last_response_id = None
 if "vector_store_id" not in st.session_state:
@@ -324,66 +309,6 @@ def get_api_key():
     """Get API key from .env file."""
     return os.getenv("OPENAI_API_KEY")
 
-def display_message(role, content, timestamp=None):
-    """Display a message with proper styling and metadata"""
-    def clean(txt: str) -> str:
-        # remove both raw and escaped <br> variants
-        replacements = [
-            '<br>', '<br/>', '<br />',
-            '&lt;br&gt;', '&lt;br/&gt;', '&lt;br /&gt;'
-        ]
-        for r in replacements:
-            txt = txt.replace(r, '')
-        return txt.strip()
-
-    safe = clean(content)
-
-    if role == "user":
-        st.markdown(f"""
-        <div class="user-message">
-            <strong>You</strong>{f' <small style="color:#666;">{timestamp}</small>' if timestamp else ''}
-            <br>{safe}
-        </div>
-        """, unsafe_allow_html=True)
-    else:
-        # Assistant content can include HTML formatting—keep as is
-        st.markdown(f"""
-        <div class="assistant-message">
-            <strong>Assistant</strong>{f' <small style="color:#666;">{timestamp}</small>' if timestamp else ''}
-            <br>{content}
-        </div>
-        """, unsafe_allow_html=True)
-
-
-
-def display_code_snippet(code, language="python", filename=None):
-    """Display code with syntax highlighting and copy button"""
-    st.markdown(f"""
-    <div class="code-block">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-            <strong>{filename or 'Code Snippet'}</strong>
-            <button onclick="navigator.clipboard.writeText(`{code}`)" class="quick-action-btn">
-                📋 Copy
-            </button>
-        </div>
-        <pre><code class="language-{language}">{code}</code></pre>
-    </div>
-    """, unsafe_allow_html=True)
-
-def process_user_input(user_input):
-    """Process user input and generate response"""
-    # Add user message to chat history
-    st.session_state.messages.append({"role": "user", "content": user_input})
-        
-    # Get bot response
-    with st.spinner("🤔 Thinking..."):
-        response = ask_bot(user_input)
-    
-    # Add assistant response to chat history
-    st.session_state.messages.append({"role": "assistant", "content": response})
-    
-    # Rerun to show new messages
-    st.rerun()
 
 # System instructions
 SYSTEM_INSTRUCTIONS = """
@@ -398,6 +323,7 @@ Retrieval & citations
 - Always use File Search first.
 - Ground every substantive answer in retrieved snippets.
 - If nothing relevant is found, say: "I don't see this in the course files." Then suggest the most relevant module(s) the learner should review.
+- Never include source citations or reference labels in the final answer text.
 
 Answer style
 - Keep outputs scannable: short paragraphs, bullet steps, compact runnable code samples when needed.
@@ -427,12 +353,105 @@ If the answer isn’t in the corpus, say so clearly.
 
 INITIAL_ASSISTANT_MESSAGE = """
 I'm Cyber Diogo, your RAG & AI Agents wingman! 🤖
-Ask me anything about the course—from building ingestion pipelines and tuning retrieval to orchestrating OpenAI Swarm agents or deploying the capstones.
-Try: "How do we evaluate our retriever with RAGAS?", 
-"Show the ingestion script for PDFs", or
- "When should I use Swarm over a CrewAI agent?"
-
+Ask me anything about the course.
 """
+
+# Formatting helpers ---------------------------------------------------------
+
+CODE_LINE_PREFIXES = (
+    "import ", "from ", "def ", "class ", "return", "yield",
+    "for ", "while ", "if ", "elif ", "else:", "try:", "except",
+    "with ", "@", "async ", "await ", "raise ", "assert ", "print(",
+)
+ASSIGNMENT_PATTERN = re.compile(r"^[A-Za-z_][\w\d_]*(\[[^\]]+\])?\s*=\s*.+")
+ORDERED_LIST_PATTERN = re.compile(r"^\d+[\).\s]")
+
+
+def _looks_like_code_line(line: str) -> bool:
+    stripped = line.strip()
+    if not stripped:
+        return False
+    if stripped.startswith(("#", "- ", "* ", ">")):
+        return False
+    if ORDERED_LIST_PATTERN.match(stripped):
+        return False
+    lowered = stripped.lower()
+    if lowered.startswith(("note:", "tip:", "warning:", "source:")):
+        return False
+    if ASSIGNMENT_PATTERN.match(stripped):
+        return True
+    if any(stripped.startswith(prefix) for prefix in CODE_LINE_PREFIXES):
+        return True
+    if stripped.endswith(":") and not stripped.endswith(("..", "...")):
+        return True
+    if "(" in stripped and ")" in stripped and any(op in stripped for op in "=+-*/"):
+        return True
+    return False
+
+
+def _is_code_block(lines):
+    meaningful = [line for line in lines if line.strip()]
+    if len(meaningful) < 2:
+        return False
+    score = sum(1 for line in meaningful if _looks_like_code_line(line))
+    return score >= max(2, len(meaningful) * 0.6)
+
+
+def _normalize_code_lines(lines):
+    normalized = []
+    for line in lines:
+        stripped = line.strip()
+        if stripped.lower().startswith("python "):
+            stripped = stripped.split(" ", 1)[1] if " " in stripped else ""
+        normalized.append(stripped if stripped else "")
+    return normalized
+
+
+def _format_plain_segment(segment: str) -> str:
+    paragraphs = [para for para in re.split(r"\n\s*\n", segment) if para.strip()]
+    formatted_parts = []
+    for para in paragraphs:
+        lines = para.splitlines()
+        if _is_code_block(lines):
+            code_lines = _normalize_code_lines(lines)
+            # Avoid empty code block
+            code_text = "\n".join(code_lines).strip("\n")
+            if code_text:
+                formatted_parts.append(f"```python\n{code_text}\n```")
+        else:
+            formatted_parts.append(para.strip())
+    return "\n\n".join(formatted_parts)
+
+
+def format_for_chat(content: str) -> str:
+    if not content:
+        return content
+
+    pieces = []
+    pattern = re.compile(r"```.*?```", re.DOTALL)
+    last_idx = 0
+
+    for match in pattern.finditer(content):
+        pre_segment = content[last_idx:match.start()]
+        if pre_segment.strip():
+            pieces.append(_format_plain_segment(pre_segment))
+        pieces.append(match.group().strip("\n"))
+        last_idx = match.end()
+
+    tail = content[last_idx:]
+    if tail.strip():
+        pieces.append(_format_plain_segment(tail))
+
+    formatted = "\n\n".join(piece.strip() for piece in pieces if piece).strip()
+    return formatted or content
+
+
+# Ensure chat history starts with the assistant's welcome message
+if "messages" not in st.session_state or not st.session_state.messages:
+    st.session_state.messages = [{
+        "role": "assistant",
+        "content": format_for_chat(INITIAL_ASSISTANT_MESSAGE.strip())
+    }]
 
 # OpenAI client setup
 @traceable if LANGSMITH_AVAILABLE else lambda x: x
@@ -462,13 +481,15 @@ def ask_bot(user_question: str, verbosity: str = "low"):
         )
 
     st.session_state.last_response_id = resp.id
-    print(resp.output_text)
     return resp.output_text
 
 def reset_conversation():
     """Reset the conversation history."""
     st.session_state.last_response_id = None
-    st.session_state.messages = []
+    st.session_state.messages = [{
+        "role": "assistant",
+        "content": format_for_chat(INITIAL_ASSISTANT_MESSAGE.strip())
+    }]
     st.rerun()
 
 # Main app
@@ -583,39 +604,34 @@ def main():
         
 
     
-    # Welcome message and capabilities - always visible
-    st.markdown('<div class="welcome-section">', unsafe_allow_html=True)
-    st.markdown('</div>', unsafe_allow_html=True)
-    
-    # Main chat area - show messages when they exist
-    if st.session_state.messages:
-        # Add some spacing before chat messages
-        st.markdown("<br>", unsafe_allow_html=True)
-        
-        # Display chat messages with enhanced styling
-        for i, message in enumerate(st.session_state.messages):
-            # Add timestamp for recent messages
-            timestamp = None
-            if i == len(st.session_state.messages) - 1:
-                timestamp = datetime.now().strftime("%H:%M")
-            
-            display_message(message["role"], message["content"], timestamp)
-    
-    # Enhanced chat input at the bottom
-    col1, col2, col3 = st.columns([1, 3, 1])
-    with col2:
-        with st.form("chat_form", clear_on_submit=True):
-            user_input = st.text_area(
-                "Your question:",
-                placeholder="Enter your message here....",
-                key="user_input",
-                height=80,
-                label_visibility="collapsed"
-            )
-            
-            submitted = st.form_submit_button("🚀 Send", use_container_width=True, type="primary", help="Send your message")
-            if submitted and user_input.strip():
-                process_user_input(user_input.strip())
+    # Conversation history (ChatGPT-style)
+    for message in st.session_state.messages:
+        display_text = (
+            format_for_chat(message["content"])
+            if message["role"] == "assistant"
+            else message["content"]
+        )
+        if message["role"] == "assistant" and display_text != message["content"]:
+            message["content"] = display_text
+        with st.chat_message(message["role"]):
+            st.markdown(display_text)
+
+    # Chat input aligned with Streamlit's native component
+    prompt = st.chat_input("Ask me anything about the course...")
+    if prompt:
+        # echo user message
+        st.session_state.messages.append({"role": "user", "content": prompt})
+        with st.chat_message("user"):
+            st.markdown(prompt)
+
+        # assistant thinking + response
+        with st.chat_message("assistant"):
+            with st.spinner("🤔 Thinking..."):
+                response = ask_bot(prompt)
+            formatted_response = format_for_chat(response)
+            st.markdown(formatted_response)
+
+        st.session_state.messages.append({"role": "assistant", "content": formatted_response})
 
 if __name__ == "__main__":
     main()
