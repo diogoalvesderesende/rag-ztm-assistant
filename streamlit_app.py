@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-RAG, AI Agents & Generative AI Course Assistant - Streamlit App
-Cyber Diogo's AI-powered companion for your Udemy course
+Rubber Ducky, the Course Assistant - Streamlit App
+Rubber Ducky's AI-powered companion for your RAG and OpenAI course
 """
 
 import os
@@ -53,8 +53,8 @@ else:
 
 # Page configuration
 st.set_page_config(
-    page_title="RAG & AI Agents Course Assistant",
-    page_icon="🚀",
+    page_title="Rubber Ducky, the Course Assistant",
+    page_icon="🦆",
     layout="wide",
     initial_sidebar_state="expanded"
 )
@@ -312,7 +312,7 @@ def get_api_key():
 
 # System instructions
 SYSTEM_INSTRUCTIONS = """
-You are Cyber Diogo, the assistant for the Udemy course "RAG, AI Agents and Generative AI with Python and OpenAI".
+You are Rubber Ducky, the course assistant for the "RAG, AI Agents and Generative AI with Python and OpenAI" course.
 Be concise, direct, and practical. Use active voice. No fluff.
 
 Primary objective
@@ -334,23 +334,24 @@ Answer style
 Boundaries
 - Don't invent references, credentials, metrics, or file names.
 - If the topic is outside RAG/agents/this curriculum, acknowledge the gap and offer a high-level pointer or ask for clarification.
+- Never mention course section or lecture identifiers. If the learner asks for a specific section/lecture, translate it into topic names and guide them without repeating any identifiers.
 
 Context: Course map & typical intents
-- Introduction (1.01-1.04): course overview/objectives, course material setup, your course assistant link, and Rubber Ducky (AI course assistant using RAG).
-- Prompt Engineering, Python & OpenAI API Basics (2.01, 3.01-3.09, 4.01-4.02, 5.01-5.16, 6.01, 7.01-7.11, 8.01, 9.01-9.04): prompt engineering game plan, API setup, few-shot, role/persona/goal, system message, transformer fundamentals, Python control flow/functions/classes, tokenization, OpenAI text/image workflows, and the LinkedIn Post Writer capstone.
-- RAG with OpenAI File Search (10.01, 11.01-11.09): RAG game plan, file search setup, vector stores, retrieving file paths, Responses endpoint, and the RAG system.
-- Deploy RAG with Streamlit (12.01-12.12): Cursor/requirements, virtual environment and `.env`, configuring the page, session state/vector store, sidebar/chat inputs, bot kwargs/answers, system instructions, GitHub, and deployment.
-- Unstructured & Multimodal RAG + Starbucks Capstone (13.01-15.08): unstructured ingestion (LangChain), working with docs (Word/PPT/EPUB/PDF), multimodal pipelines (Whisper + CLIP + contrastive learning), retrieval + context prep, and the Starbucks financial data capstone.
-- Advanced RAG, RAGAS, Agentic RAG & Vercel Deploy (16.01, 17.01-17.11, 18.01-18.25, 19.01-19.15, 20.01-20.09): LightRAG knowledge graphs, RAGAS evaluation metrics, agentic RAG state/memory, and deployment of the agentic RAG app on Vercel.
+- Introduction: course overview/objectives, course material setup, your course assistant link, and Rubber Ducky (AI course assistant using RAG).
+- Prompt Engineering, Python & OpenAI API Basics: prompt engineering game plan, API setup, few-shot, role/persona/goal, system message, transformer fundamentals, Python control flow/functions/classes, tokenization, OpenAI text/image workflows, and the LinkedIn Post Writer capstone.
+- RAG with OpenAI File Search: RAG game plan, file search setup, vector stores, retrieving file paths, Responses endpoint, and the RAG system.
+- Deploy RAG with Streamlit: Cursor/requirements, virtual environment and `.env`, configuring the page, session state/vector store, sidebar/chat inputs, bot kwargs/answers, system instructions, GitHub, and deployment.
+- Unstructured & Multimodal RAG + Starbucks Capstone: unstructured ingestion (LangChain), working with docs (Word/PPT/EPUB/PDF), multimodal pipelines (Whisper + CLIP + contrastive learning), retrieval + context prep, and the Starbucks financial data capstone.
+- Advanced RAG, RAGAS, Agentic RAG & Vercel Deploy: LightRAG knowledge graphs, RAGAS evaluation metrics, agentic RAG state/memory, and deployment of the agentic RAG app on Vercel.
 
-If the learner references a lecture/section by name/number, search for files with that stem and tailor the answer.
-Never invent lecture numbers or titles—they change over time.
+If the learner references a lecture/section by name, search for files with that stem and tailor the answer.
+Never invent lecture titles—they change over time.
 If the answer isn’t in the corpus, say so clearly.
 """
 
 INITIAL_ASSISTANT_MESSAGE = """
-I'm Cyber Diogo, your RAG & AI Agents wingman! 🤖
-Ask me anything about the course.
+I'm Rubber Ducky, your course assistant for RAG, agents, and OpenAI projects.
+Ask me anything about the course material and code.
 """
 
 # Formatting helpers ---------------------------------------------------------
@@ -502,26 +503,26 @@ def main():
         print("Info: LangSmith not available")
     
     # Header
-    st.markdown('<h1 class="main-header">🤖 RAG, AI Agents & Generative AI Course Assistant</h1>', unsafe_allow_html=True)
-    st.markdown('<p class="tagline">Your AI co-pilot for Retrieval-Augmented Generation, agent workflows, and OpenAI-powered applications. 🚀</p>', unsafe_allow_html=True)
+    st.markdown('<h1 class="main-header">🦆 Rubber Ducky, the Course Assistant</h1>', unsafe_allow_html=True)
+    st.markdown('<p class="tagline">Rubber Ducky helps you build great RAG answers, agent workflows, and OpenAI-powered apps.</p>', unsafe_allow_html=True)
     
     # Introduction section
     with st.expander("📚 What I Can Help You With", expanded=False):
         st.markdown("""
         **🎯 My Capabilities:**
-        - **Implementation Boosts**: Provide runnable snippets for ingestion jobs, vector store prep, LangChain workflows, CrewAI/Swarm agents, and Streamlit deployment.
+        - **Implementation Boosts**: Rubber Ducky provides runnable snippets for ingestion jobs, vector store prep, LangChain workflows, CrewAI/Swarm agents, and Streamlit deployment.
         - **Concept Clarity**: Explain chunking heuristics, embedding choices, retrieval quality levers, prompt engineering, guardrails, and evaluation frameworks in plain language.
-        - **File References**: Surface the exact lecture notes, notebooks, datasets, or helper scripts you need, with context and citations.
+        - **File References**: Rubber Ducky surfaces the exact lecture notes, notebooks, datasets, or helper scripts you need, with context and citations.
         - **Architecture Advice**: Compare Flowise vs. native OpenAI pipelines, hybrid search strategies, agent routing patterns, and monitoring approaches.
-        - **Capstone Coaching**: Walk you through projects like the customer acquisition copilot, multimodal Starbucks analyst, and AI product manager crews.
+        - **Capstone Coaching**: Rubber Ducky walks you through capstone projects like the customer acquisition copilot, multimodal Starbucks analyst, and AI product manager crews.
         
         **📖 Course Topics I Cover:**
-        - **Introduction (1.01-1.04)**: course overview/objectives, course material setup, course assistant link, and Rubber Ducky (AI course assistant using RAG).
-        - **Prompt Engineering, Python & OpenAI API Basics (2.01, 3.01-3.09, 4.01-4.02, 5.01-5.16, 6.01, 7.01-7.11, 8.01, 9.01-9.04)**: prompt engineering game plan, API setup, few-shot, role/persona/goal, system message, transformer fundamentals, Python control flow/functions/classes, tokenization, OpenAI text/image workflows, and the LinkedIn Post Writer capstone.
-        - **RAG with OpenAI File Search (10.01, 11.01-11.09)**: RAG game plan, file search setup, vector stores, retrieving file paths, Responses endpoint, and the RAG system.
-        - **Deploy RAG with Streamlit (12.01-12.12)**: Cursor/requirements, virtual environment and `.env`, configuring the page, session state/vector store, sidebar/chat inputs, bot kwargs/answers, system instructions, GitHub, and deployment.
-        - **Unstructured & Multimodal RAG + Starbucks Capstone (13.01-15.08)**: unstructured ingestion (LangChain), working with Word/PPT/EPUB/PDF, multimodal pipelines (Whisper + CLIP + contrastive learning), retrieval + context prep, and the Starbucks financial data capstone.
-        - **Advanced RAG, RAGAS, Agentic RAG & Vercel Deploy (16.01, 17.01-17.11, 18.01-18.25, 19.01-19.15, 20.01-20.09)**: LightRAG knowledge graphs, RAGAS evaluation metrics, agentic RAG state/memory, and Vercel deployment of the agentic RAG app.
+        - **Introduction**: course overview/objectives, course material setup, your course assistant link, and Rubber Ducky (your AI course assistant using RAG).
+        - **Prompt Engineering, Python & OpenAI API Basics**: prompt engineering game plan, API setup, few-shot, role/persona/goal, system message, transformer fundamentals, Python control flow/functions/classes, tokenization, OpenAI text/image workflows, and the LinkedIn Post Writer capstone.
+        - **RAG with OpenAI File Search**: RAG game plan, file search setup, vector stores, retrieving file paths, Responses endpoint, and the RAG system.
+        - **Deploy RAG with Streamlit**: Cursor/requirements, virtual environment and `.env`, configuring the page, session state/vector store, sidebar/chat inputs, bot kwargs/answers, system instructions, GitHub, and deployment.
+        - **Unstructured & Multimodal RAG + Starbucks Capstone**: unstructured ingestion (LangChain), working with Word/PPT/EPUB/PDF, multimodal pipelines (Whisper + CLIP + contrastive learning), retrieval + context prep, and the Starbucks financial data capstone.
+        - **Advanced RAG, RAGAS, Agentic RAG & Vercel Deploy**: LightRAG knowledge graphs, RAGAS evaluation metrics, agentic RAG state/memory, and Vercel deployment of the agentic RAG app.
 
         **❌ What I Cannot Do:**
         - Run code or execute scripts (I provide code, you run it)
@@ -546,19 +547,19 @@ def main():
         #     st.success("🔍 AI Assistant is here for you", icon="✅") 
 
         # Reset button
-        if st.button("🔄 Reset Conversation", type="secondary"):
+        if st.button("🦆 Reset Conversation", type="secondary"):
             reset_conversation()
         
         # Feedback section
         st.markdown("---")
-        st.markdown("### 💬 Share Your Thoughts")
-        st.markdown("Help me improve!")
+        st.markdown("### 💬 Share Your Thoughts with Rubber Ducky")
+        st.markdown("Rubber Ducky would love your feedback!")
         
         # Feedback button - direct link to Typeform
         st.markdown(f"""
         <a href="https://6yoersztgja.typeform.com/to/A8OXdhvY" target="_blank" style="text-decoration: none;">
             <button style="width: 100%; background-color: #0074FF; color: white; border: none; border-radius: 8px; padding: 0.5rem 1rem; font-size: 14px; font-weight: 500; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; gap: 8px;">
-                📝 Give Feedback
+                🦆 Give Feedback
             </button>
         </a>
         """, unsafe_allow_html=True)
@@ -570,7 +571,7 @@ def main():
         
         # Course button - direct link
         st.markdown(f"""
-        <a href="https://www.udemy.com/course/generative-ai-rag/" target="_blank" style="text-decoration: none;">
+        <a href="https://academy.zerotomastery.io/courses/enrolled/2664888?" target="_blank" style="text-decoration: none;">
             <button style="width: 100%; background-color: #0074FF; color: white; border: none; border-radius: 8px; padding: 0.5rem 1rem; font-size: 14px; font-weight: 500; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; gap: 8px;">
                 🚀 Go to Course
             </button>
@@ -581,7 +582,7 @@ def main():
 
         # Support section
         st.markdown("### 💝 Support This App")
-        st.markdown("Help keep this RAG & AI Agents Course Assistant free and running!")
+        st.markdown("Help keep Rubber Ducky free and running!")
         
         
         # Buy Me a Coffee button
@@ -611,7 +612,7 @@ def main():
             st.markdown(display_text)
 
     # Chat input aligned with Streamlit's native component
-    prompt = st.chat_input("Ask me anything about the course...")
+    prompt = st.chat_input("Ask Rubber Ducky anything about RAG, agents, or OpenAI apps...")
     if prompt:
         # echo user message
         st.session_state.messages.append({"role": "user", "content": prompt})
@@ -620,7 +621,7 @@ def main():
 
         # assistant thinking + response
         with st.chat_message("assistant"):
-            with st.spinner("🤔 Thinking..."):
+            with st.spinner("🦆 Rubber Ducky is thinking..."):
                 response = ask_bot(prompt)
             formatted_response = format_for_chat(response)
             st.markdown(formatted_response)

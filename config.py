@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Configuration file for Time Series Course Assistant
+Configuration file for Rubber Ducky, the Course Assistant
 """
 
 import os
@@ -25,13 +25,13 @@ AVAILABLE_MODELS = [
 VERBOSITY_LEVELS = ["low", "medium", "high"]
 
 # UI Configuration
-PAGE_TITLE = "Time Series Course Assistant"
-PAGE_ICON = "🚀"
+PAGE_TITLE = "Rubber Ducky, the Course Assistant"
+PAGE_ICON = "🦆"
 LAYOUT = "wide"
 
 # Chat Configuration
 MAX_MESSAGES = 100  # Maximum messages to keep in history
-CHAT_INPUT_PLACEHOLDER = "Ask me anything about Time Series!"
+CHAT_INPUT_PLACEHOLDER = "Ask Rubber Ducky anything about RAG, agents, or OpenAI apps!"
 
 # Styling
 PRIMARY_COLOR = "#1f77b4"
@@ -40,14 +40,14 @@ SUCCESS_COLOR = "#4caf50"
 WARNING_COLOR = "#ff9800"
 ERROR_COLOR = "#f44336"
 
-# Example questions for the sidebar
+# Example questions for the sidebar (keep them topic-focused, no course/lecture identifiers)
 EXAMPLE_QUESTIONS = [
-    "ARIMA vs SARIMA—when to use each?",
-    "Show the LSTM code we used",
-    "When to use NBEATS vs TFT?",
-    "How do we implement cross-validation?",
-    "What are the pros/cons of Prophet?",
-    "How do we handle seasonality in time series?",
-    "What's the difference between MAE and RMSE?",
-    "How do we add exogenous variables to SARIMAX?"
+    "How does Rubber Ducky approach prompt engineering for RAG answers",
+    "How do you design chunking and embeddings for better retrieval",
+    "What is OpenAI File Search and how should I use it in a chat app",
+    "How do I deploy a RAG Streamlit app to production",
+    "How do unstructured documents flow through a retrieval + generation pipeline",
+    "What are Whisper and CLIP used for in multimodal RAG",
+    "How do RAGAS metrics help evaluate retrieval quality",
+    "How does agentic RAG use state/memory to improve answers"
 ]
