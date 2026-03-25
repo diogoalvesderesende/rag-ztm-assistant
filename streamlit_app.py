@@ -336,15 +336,12 @@ Boundaries
 - If the topic is outside RAG/agents/this curriculum, acknowledge the gap and offer a high-level pointer or ask for clarification.
 
 Context: Course map & typical intents
-- Section 1: Orientation—promo, overview, resource downloads, course assistant setup, instructor background, and request channels for 2026 updates.
-- Section 2: Python for RAG & AI—functions, control flow, classes, exercises, and mini-games that refresh foundational skills.
-- Part A (Sections 3–11): Flowise RAG builds—planning, loaders, chunking, embeddings, vector stores, prompt engineering (system, temperature/top_p, persona), quizzes, and the first RAG capstone.
-- Part B (Sections 13–16): OpenAI API pipelines—text & image endpoints, Responses API, GenAI customer acquisition project, file search assistant in Streamlit, configuration, debugging, and deployment.
-- Part C (Sections 17–20): Unstructured & multimodal RAG—LangChain ingestion, FAISS indexing, Whisper transcription, CLIP embeddings, contrastive learning, video/audio pipelines, and Starbucks financial capstone.
-- Part D (Sections 21–24): Advanced retrieval—LightRAG knowledge graphs, agentic RAG state machines, multi-agent collaboration, RAGAS metrics, and evaluation workflows.
-- Part E (Sections 25–29): AI agents—CrewAI tooling, OpenAI Swarm orchestration, news-fetching crews, The Psychiatrist capstone, and human-in-the-loop guardrails.
-- Part F (Sections 30–35): Advanced generative AI—reasoning models (o-series), image generation pipelines, GPT fine-tuning end-to-end, MCP integrations, and closing surveys.
-- Appendix (Sections 36–45): Python crash course, essentials, intermediate/advanced drills, OOP projects, capstone games, book reviews, and next steps guidance.
+- Introduction (1.01-1.04): course overview/objectives, course material setup, your course assistant link, and Rubber Ducky (AI course assistant using RAG).
+- Prompt Engineering, Python & OpenAI API Basics (2.01, 3.01-3.09, 4.01-4.02, 5.01-5.16, 6.01, 7.01-7.11, 8.01, 9.01-9.04): prompt engineering game plan, API setup, few-shot, role/persona/goal, system message, transformer fundamentals, Python control flow/functions/classes, tokenization, OpenAI text/image workflows, and the LinkedIn Post Writer capstone.
+- RAG with OpenAI File Search (10.01, 11.01-11.09): RAG game plan, file search setup, vector stores, retrieving file paths, Responses endpoint, and the RAG system.
+- Deploy RAG with Streamlit (12.01-12.12): Cursor/requirements, virtual environment and `.env`, configuring the page, session state/vector store, sidebar/chat inputs, bot kwargs/answers, system instructions, GitHub, and deployment.
+- Unstructured & Multimodal RAG + Starbucks Capstone (13.01-15.08): unstructured ingestion (LangChain), working with docs (Word/PPT/EPUB/PDF), multimodal pipelines (Whisper + CLIP + contrastive learning), retrieval + context prep, and the Starbucks financial data capstone.
+- Advanced RAG, RAGAS, Agentic RAG & Vercel Deploy (16.01, 17.01-17.11, 18.01-18.25, 19.01-19.15, 20.01-20.09): LightRAG knowledge graphs, RAGAS evaluation metrics, agentic RAG state/memory, and deployment of the agentic RAG app on Vercel.
 
 If the learner references a lecture/section by name/number, search for files with that stem and tailor the answer.
 Never invent lecture numbers or titles—they change over time.
@@ -519,15 +516,12 @@ def main():
         - **Capstone Coaching**: Walk you through projects like the customer acquisition copilot, multimodal Starbucks analyst, and AI product manager crews.
         
         **📖 Course Topics I Cover:**
-        - **Section 1**: Orientation—promo, course overview, materials, assistant access, instructor intro, and update requests.
-        - **Section 2**: Python for RAG & AI—functions, exercises, classes, and mini-games to sharpen automation skills.
-        - **Part A (Sections 3–11)**: RAG fundamentals with Flowise—planning, loaders, chunking, embeddings, vector stores, prompt engineering, challenges, and the first RAG capstone.
-        - **Part B (Sections 13–16)**: RAG with OpenAI API—Responses API, text & image workflows, GenAI customer acquisition project, file search build in Streamlit, and deployment pipeline.
-        - **Part C (Sections 17–20)**: Unstructured & multimodal data—LangChain ingestion, FAISS, Whisper, CLIP, contrastive learning, and the Starbucks multimodal project.
-        - **Part D (Sections 21–24)**: Advanced retrieval—LightRAG knowledge graphs, agentic RAG orchestration, state management, and evaluation with RAGAS metrics.
-        - **Part E (Sections 25–29)**: AI agents—CrewAI crews, OpenAI Swarm orchestration, pricing research agents, The Psychiatrist capstone, and human-in-the-loop patterns.
-        - **Part F (Sections 30–35)**: Advanced generative AI—reasoning models (O-series), image workflows, GPT fine-tuning, MCP integrations, and course wrap-up.
-        - **Appendix (Sections 36–45)**: Python crash course, fundamentals, intermediate challenges, OOP deep dives, capstone games, and next-step guidance.
+        - **Introduction (1.01-1.04)**: course overview/objectives, course material setup, course assistant link, and Rubber Ducky (AI course assistant using RAG).
+        - **Prompt Engineering, Python & OpenAI API Basics (2.01, 3.01-3.09, 4.01-4.02, 5.01-5.16, 6.01, 7.01-7.11, 8.01, 9.01-9.04)**: prompt engineering game plan, API setup, few-shot, role/persona/goal, system message, transformer fundamentals, Python control flow/functions/classes, tokenization, OpenAI text/image workflows, and the LinkedIn Post Writer capstone.
+        - **RAG with OpenAI File Search (10.01, 11.01-11.09)**: RAG game plan, file search setup, vector stores, retrieving file paths, Responses endpoint, and the RAG system.
+        - **Deploy RAG with Streamlit (12.01-12.12)**: Cursor/requirements, virtual environment and `.env`, configuring the page, session state/vector store, sidebar/chat inputs, bot kwargs/answers, system instructions, GitHub, and deployment.
+        - **Unstructured & Multimodal RAG + Starbucks Capstone (13.01-15.08)**: unstructured ingestion (LangChain), working with Word/PPT/EPUB/PDF, multimodal pipelines (Whisper + CLIP + contrastive learning), retrieval + context prep, and the Starbucks financial data capstone.
+        - **Advanced RAG, RAGAS, Agentic RAG & Vercel Deploy (16.01, 17.01-17.11, 18.01-18.25, 19.01-19.15, 20.01-20.09)**: LightRAG knowledge graphs, RAGAS evaluation metrics, agentic RAG state/memory, and Vercel deployment of the agentic RAG app.
 
         **❌ What I Cannot Do:**
         - Run code or execute scripts (I provide code, you run it)
